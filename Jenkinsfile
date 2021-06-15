@@ -3,8 +3,9 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'python --version'
                 sh 'python plus_ou_moins.py'
+                stash(name: 'Compiled-results', includes: '*.py')
+                echo "Build Success"
             }
         }
     }
