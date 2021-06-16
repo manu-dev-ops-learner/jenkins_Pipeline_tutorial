@@ -1,5 +1,6 @@
 #Import
 import random
+from emoji import emojize
 #import sys
 
 #Function
@@ -18,10 +19,11 @@ def plus_ou_moins():
         #When user number > 9
         if (user_number > 9):    
             print("Oups, entre 0 et 9 on a dit !")
-            user_number = int(input("Allez une autre chance, entrez un chiffre entre 0 et 9 : "))
+            user_number = int(input("Allez une autre chance, entrez un chiffre entre 0 et 9 : ", emojize(":smiling_face_with_sunglasses:")))
         
-        else :    
-            user_number = int(input("Pas de bol, retentez un chiffre entre 0 et 9 : "))
+        else : 
+            print(emojize(":smiling_face_with_sunglasses:"))   
+            user_number = int(input("Pas de bol, retentez un chiffre entre 0 et 9 :"))
     
 
     if (user_number==random_number) :
@@ -31,7 +33,9 @@ def plus_ou_moins():
     
 #print(sys.version)
 #Add execption on float and string
+#UI For final User
+#Run it in docker and in VM Docker container
 
 #Function call
-#plus_ou_moins()
+plus_ou_moins()
     
