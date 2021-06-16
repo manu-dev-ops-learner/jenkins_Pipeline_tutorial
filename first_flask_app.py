@@ -26,5 +26,5 @@ def more_or_less_game():
     plus_ou_moins()
 
 if __name__ == "__main__":
-    app.run()
+     app.run(debug=True, host='0.0.0.0')
 
