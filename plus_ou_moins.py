@@ -1,6 +1,6 @@
 #Import
 import random
-from emoji import emojize
+#from emoji import emojize
 #import sys
 
 #Function
@@ -18,12 +18,13 @@ def plus_ou_moins():
 
         #When user number > 9
         if (user_number > 9):    
-            print("Oups, entre 0 et 9 on a dit !")
-            user_number = int(input("Allez une autre chance, entrez un chiffre entre 0 et 9 : ", emojize(":smiling_face_with_sunglasses:")))
+            print("Oups, entre 0 et 9 on a dit !", "\U0001F605")
+            user_number = int(input("Allez une autre chance, entrez un chiffre entre 0 et 9 : "))
         
         else : 
-            print(emojize(":smiling_face_with_sunglasses:"))   
-            user_number = int(input("Pas de bol, retentez un chiffre entre 0 et 9 :"))
+            #print(emojize(":smiling_face_with_sunglasses:"))   
+            print ("\U0001F605")
+            user_number = int(input("Pas de bol, retentez un chiffre entre 0 et 9 :" ))
     
 
     if (user_number==random_number) :
