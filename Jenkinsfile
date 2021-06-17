@@ -8,6 +8,7 @@ pipeline {
             steps {
                 sh 'docker build -t mkouakou/flask_app_image:2.0.0 . '
                 echo  'Build success'
+            //rm build images to docker host after build
             }
         }
 
@@ -22,6 +23,19 @@ pipeline {
                 }
         }
 
+    //Stash to Nexus repo
+
+        stage('Publish image to Nexus'){
+            steps{
+                withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'nexusPwd')]) {
+                    sh "docker login -u admin -p ${nexuspwd} http://srvdoadop2:9080"
+                   
+            }
+                    sh 'docker push srvdoadop2:9080/flask_app_image:2.0.0'
+                
+                }
+        }
+
         stage('Run in the jenkins host') {
             steps {
 
@@ -31,3 +45,5 @@ pipeline {
         }
     }
 }
+
+//Do it for IA projects3
