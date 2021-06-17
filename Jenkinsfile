@@ -14,7 +14,7 @@ pipeline {
          stage('Run') {
             steps {
                 sh """ docker run --rm flask_app  """
-                echo " Runn success"
+                echo " Run success"
             }
         }
     }
