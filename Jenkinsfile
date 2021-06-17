@@ -27,8 +27,8 @@ pipeline {
 
         stage('Publish image to Nexus'){
             steps{
-                withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'nexusPwd')]) {
-                    sh "docker login -u admin -p ${nexuspwd} http://srvdoadop2:9080"
+               withCredentials([string(credentialsId: 'nexusPwd', variable: 'nexusPwd')]) {
+                    sh "docker login -u admin -p ${nexusPwd} http://srvdoadop2:9080"
                    
             }
                     sh 'docker push srvdoadop2:9080/flask_app_image:2.0.0'
