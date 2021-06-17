@@ -15,8 +15,9 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
                     sh "docker login -u mkouakou -p ${dockerHubPwd}"
+                    sh 'docker push flask_app_image'
             }
-                sh 'docker push flask_app_image'
+                
                 }
         }
 
