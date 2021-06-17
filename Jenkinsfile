@@ -38,13 +38,25 @@ pipeline {
                 }
         }
 
-        stage('Run in the jenkins host') {
-            steps {
+        //stage('Run in the jenkins host') {
+            //steps {
 
-                sh 'docker run -d -p 5000:5000 --name flask_app_cont srvdoadop2:9080/flask_app_image:2.0.0' 
+               // sh 'docker run -d -p 5000:5000 --name flask_app_cont srvdoadop2:9080/flask_app_image:2.0.0' 
+                //echo ' Run success'
+            //}
+        //}
+
+        stage('Run in VM4') {
+            steps {
+                sshagent(['vm4']) {
+                    sh 'docker run -d -p 5000:5000 --name flask_app_cont srvdoadop2:9080/flask_app_image:2.0.0' '
+                }
+                
                 echo ' Run success'
             }
         }
+
+
     }
 }
 
