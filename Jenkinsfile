@@ -31,6 +31,7 @@ pipeline {
                     sh " docker login -u admin -p ${nexus} http://srvdoadop2:9080 "
                    
             }
+                    sh 'docker tag flask_app_image:2.0.0 srvdoadop2:9080/flask_app_image:2.0.0'
                     sh 'docker push srvdoadop2:9080/flask_app_image:2.0.0'
                 
                 }
