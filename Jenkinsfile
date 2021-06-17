@@ -6,8 +6,8 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t mkouakou/flask_app_image:2.0.0 . '
-                sh 'docker tag mkouakou/flask_app_image:2.0.0 srvdoadop2:9080/flask_app_image:2.0.0'
+                sh 'docker build -t srvdoadop2:9080/flask_app_image:2.0.0 . '
+               // sh 'docker tag mkouakou/flask_app_image:2.0.0 srvdoadop2:9080/flask_app_image:2.0.0'
                 echo  'Build success'
             //rm build images to docker host after build
             }
@@ -41,7 +41,7 @@ pipeline {
         stage('Run in the jenkins host') {
             steps {
 
-                sh 'docker run -d -p 5000:5000 --name flask_app_cont mkouakou/flask_app_image:2.0.0' 
+                sh 'docker run -d -p 5000:5000 --name flask_app_cont srvdoadop2:9080/flask_app_image:2.0.0' 
                 echo ' Run success'
             }
         }
