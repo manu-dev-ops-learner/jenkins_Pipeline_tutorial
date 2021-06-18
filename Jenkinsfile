@@ -65,3 +65,4 @@ pipeline {
 
 //Do it for IA projects3
 //How to add tag automa
+}
