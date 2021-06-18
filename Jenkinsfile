@@ -1,9 +1,9 @@
 //Credentials de la machine distante
 def remote = [:]
 remote.name = 'VM4'
-remote.host = '172.31.105.15'
-remote.user = 'root'
-remote.password = 'devOpsAlt=15'
+remote.host = 'SRVDOADOP4'
+//remote.user = 'root'
+//remote.password = 'devOpsAlt=15'
 remote.allowAnyHosts = true
 
 pipeline {
@@ -55,6 +55,10 @@ pipeline {
         //Run de l'image sur un container distant
         stage('Run in Remote host') {
             steps {
+                withCredentials([usernamePassword(credentialsId: 'cred-vm4', passwordVariable: 'pwdVM4', usernameVariable: 'userVM4')]) {
+                        remote.user = "${userVM4}"
+   		                remote.password = "${pwdVM4}"
+            }           
                 sshCommand remote: remote, command: "docker run -d -p 5001:5000 --name flask_app_VM4 srvdoadop2:9080/flask_app_image:2.0.0 "
                 echo  'Run success'
     }
