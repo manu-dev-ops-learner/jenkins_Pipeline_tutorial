@@ -49,11 +49,12 @@ pipeline {
 
         stage('Run in VM4') {
             steps {
+                def dockerRun='docker run -d -p 5001:5000 --name flask_app_VM4 srvdoadop2:9080/flask_app_image:2.0.0'
                 sshagent(['vm4']) {
-                    sh 'ssh -o StrictHostKeyChecking=no  root@172.31.105.15'
+                    sh "ssh -o StrictHostKeyChecking=no  root@172.31.105.15 ${dockerRun}"
                 
             }
-            sh 'docker run -d -p 5001:5000 --name flask_app_VM4 srvdoadop2:9080/flask_app_image:2.0.0' 
+            //sh 'docker run -d -p 5001:5000 --name flask_app_VM4 srvdoadop2:9080/flask_app_image:2.0.0' 
                
             echo ' Run success'
         }
