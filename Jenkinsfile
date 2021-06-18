@@ -1,4 +1,10 @@
-def dockerRun='docker run -d -p 5001:5000 --name flask_app_VM4 srvdoadop2:9080/flask_app_image:2.0.0'
+
+def remote = [:]
+remote.name = 'VM4'
+remote.host = '172.31.105.15'
+remote.user = 'root'
+remote.password = 'devOpsAlt=15'
+remote.allowAnyHosts = true
 
 pipeline {
 
@@ -6,66 +12,10 @@ pipeline {
 
     stages {
 
-        stage('Docker Build') {
-            steps {
-                sh 'docker build -t srvdoadop2:9080/flask_app_image:2.0.0 . '
-               // sh 'docker tag mkouakou/flask_app_image:2.0.0 srvdoadop2:9080/flask_app_image:2.0.0'
-                echo  'Build success'
-            //rm build images to docker host after build
-            }
-        }
-
-        //stage('Publish image to Docker Hub'){
-           // steps{
-             //   withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
-               //     sh "docker login -u mkouakou -p ${dockerHubPwd}"
-                   
-            //}
-              //      sh 'docker push mkouakou/flask_app_image:2.0.0'
-                
-                //}
-        //}
-
-    //Stash to Nexus repo
-
-        stage('Publish image to Nexus'){
-            steps{
-               withCredentials([string(credentialsId: 'nexuspassword', variable: 'nexus')]) {
-                    sh " docker login -u admin -p ${nexus} http://srvdoadop2:9080 "
-                   
-            }
-                    
-                    sh 'docker push srvdoadop2:9080/flask_app_image:2.0.0'
-                
-                }
-        }
-
-        //stage('Run in the jenkins host') {
-            //steps {
-
-               // sh 'docker run -d -p 5000:5000 --name flask_app_cont srvdoadop2:9080/flask_app_image:2.0.0' 
-                //echo ' Run success'
-            //}
-        //}
-
-
-        stage('Run in VM4') {
-           steps {
-                
-                sshagent(['vm4']) {
-                    sh "ssh -o StrictHostKeyChecking=no  root@172.31.105.15 ${dockerRun}"
-                
-            }
-            //sh 'docker run -d -p 5001:5000 --name flask_app_VM4 srvdoadop2:9080/flask_app_image:2.0.0' 
-               
-            echo ' Run success'
-        }
-
-
+    stage('Remote SSH') {
+      sshCommand remote: remote, command: "ls -lrt"
+      //sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
     }
 }
 
-
-//Do it for IA projects3
-//How to add tag automa
 }
