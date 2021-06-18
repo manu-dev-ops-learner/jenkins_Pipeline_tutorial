@@ -49,7 +49,7 @@ pipeline {
         stage('Run in VM4') {
             steps {
                 sshagent(['connect_VM4']) {
-                    sh 'docker run -d -p 5000:5000 --name flask_app_cont srvdoadop2:9080/flask_app_image:2.0.0' 
+                    sh 'docker run -d -p 5000:5000 --name flask_app_cont_VM4 srvdoadop2:9080/flask_app_image:2.0.0' 
                 }
                 
                 echo ' Run success'
