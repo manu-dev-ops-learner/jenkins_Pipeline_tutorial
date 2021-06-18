@@ -1,4 +1,4 @@
-
+//Credentials de la machine distante
 def remote = [:]
 remote.name = 'VM4'
 remote.host = '172.31.105.15'
@@ -11,11 +11,52 @@ pipeline {
     agent any
 
     stages {
+        
+        //Construction de l'image à partir du Dockerfile
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t srvdoadop2:9080/flask_app_image:2.0.0 . '
+                echo  'Build success'
+            }
+        }
 
-    stage('Remote SSH') {
-        steps {
-      sshCommand remote: remote, command: "docker ps"
-      //sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
+        //Connexion et push de l'image sur DockerHub le tag doit être respecté
+        //stage('Publish image to Docker Hub'){
+           // steps{
+             //   withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
+               //     sh "docker login -u mkouakou -p ${dockerHubPwd}"
+                   
+            //}
+              //      sh 'docker push mkouakou/flask_app_image:2.0.0'
+                
+                //}
+        //}
+
+        //Connexion et push de l'image sur Nexus Alteca, le tag doit être respecté, l'interpolation aussi avec les ""
+        stage('Publish image to Nexus'){
+            steps{
+               withCredentials([string(credentialsId: 'nexuspassword', variable: 'nexus')]) {
+                    sh " docker login -u admin -p ${nexus} http://srvdoadop2:9080 "
+            }   
+                    sh 'docker push srvdoadop2:9080/flask_app_image:2.0.0'
+                    echo  'Push to Alteca Nexus success'
+                }
+        }
+
+        //Run du container sur la VM hôte de Jenkins
+        //stage('Run in the jenkins host') {
+            //steps {
+
+               // sh 'docker run -d -p 5000:5000 --name flask_app_cont srvdoadop2:9080/flask_app_image:2.0.0' 
+                //echo ' Run success'
+            //}
+        //}
+
+        //Run de l'image sur un container distant
+        stage('Run in Remote host') {
+            steps {
+                sshCommand remote: remote, command: "docker run -d -p 5001:5000 --name flask_app_VM4 srvdoadop2:9080/flask_app_image:2.0.0 "
+                echo  'Run success'
     }
     }
 }
