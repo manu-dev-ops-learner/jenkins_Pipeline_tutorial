@@ -48,7 +48,7 @@ pipeline {
 
         stage('Connexion to VM4 via SSH') {
 
-            sh 'ssh root@root@172.31.105.15'
+            sh 'ssh root@172.31.105.15'
             echo 'Success'
 
         }
