@@ -48,10 +48,11 @@ pipeline {
 
         stage('Run in VM4') {
             steps {
-                sshagent(['connect_VM4']) {
-                    sh 'docker run -d -p 5001:5000 --name flask_app_VM4 srvdoadop2:9080/flask_app_image:2.0.0' 
-                }
-                
+                //sshagent(['connect_VM4']) {
+                    //sh 'docker run -d -p 5001:5000 --name flask_app_VM4 srvdoadop2:9080/flask_app_image:2.0.0' 
+                //}
+
+                sh 'docker -H ssh://root@172.31.105.15 run -d -p 5001:5000 srvdoadop2:9080/flask_app_image:2.0.0'
                 echo ' Run success'
             }
         }
