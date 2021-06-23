@@ -10,9 +10,6 @@ def plus_ou_moins():
     user_number = int(input("Entrez un chiffre entre 0 et 9 : "))
     random_number = random.randint(0,9)
 
-    #If user number > 9
-
-
     #Compare user given number with number choices by computer
     while (user_number != random_number):
 

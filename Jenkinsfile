@@ -8,6 +8,7 @@ withCredentials([usernamePassword(credentialsId: 'cred-vm4', passwordVariable: '
             }  
 remote.allowAnyHosts = true
 
+
 pipeline {
 
     agent any
@@ -18,7 +19,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh 'docker build -t srvdoadop2:9080/flask_app_image:2.0.0 . '
-                echo  'Build success'
+                echo  "Build $BUILD_NUMBER success"
             }
         }
 
