@@ -2,8 +2,6 @@
 def remote = [:]
 remote.name = 'VM4'
 remote.host = 'SRVDOADOP4'
-//remote.user = 'root'
-//remote.password = 'devOpsAlt=15'
 withCredentials([usernamePassword(credentialsId: 'cred-vm4', passwordVariable: 'pwdVM4', usernameVariable: 'userVM4')]) {
                         remote.user = "${userVM4}"
    		                remote.password = "${pwdVM4}"
